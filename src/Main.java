@@ -1,15 +1,32 @@
-//TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
-// click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
-public class Main {
-    public static void main(String[] args) {
-        //TIP Press <shortcut actionId="ShowIntentionActions"/> with your caret at the highlighted text
-        // to see how IntelliJ IDEA suggests fixing it.
-        System.out.printf("Hello and welcome!");
+class Main {
 
-        for (int i = 1; i <= 5; i++) {
-            //TIP Press <shortcut actionId="Debug"/> to start debugging your code. We have set one <icon src="AllIcons.Debugger.Db_set_breakpoint"/> breakpoint
-            // for you, but you can always add more by pressing <shortcut actionId="ToggleLineBreakpoint"/>.
-            System.out.println("i = " + i);
+    static final int COLUMNS=7;
+    static final int ROWS=6;
+    static final int[][] INDICES={
+            {1, 0},
+            {1, 1},
+            {0, 1},
+            {-1, 1}
+    };
+    public static final int MAX_MOVES = COLUMNS * ROWS;
+    public static final int WINNING_LENGTH = 4;
+    static final boolean[][][] directions = new boolean[COLUMNS][ROWS][INDICES.length];
+
+
+    public static void main(String[] args) {
+        setDirections();
+    }
+
+    private static void setDirections() {
+        // Only initialize if not already set
+        if (directions[0][0][0]) return;
+        for (int i = 0; i < COLUMNS; i++) {
+            for (int j = 0; j < ROWS; j++) {
+                directions[i][j][0] = i < COLUMNS - WINNING_LENGTH + 1;
+                directions[i][j][1] = (i < COLUMNS - WINNING_LENGTH + 1 && j < ROWS - WINNING_LENGTH + 1);
+                directions[i][j][2] = j < ROWS - WINNING_LENGTH + 1;
+                directions[i][j][3] = (i > WINNING_LENGTH - 2 && j < ROWS - WINNING_LENGTH + 1);
+            }
         }
     }
 }
